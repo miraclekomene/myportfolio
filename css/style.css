@@ -26,7 +26,8 @@ body{
 }
 
 header{
-    position: fixed;
+    /* position: fixed;  */
+    position: relative; 
     width: 100%;
     top: 0;
     right: 0;
@@ -78,6 +79,7 @@ span{
     padding: 11px 26px;
     background: transparent;
     color: var(--main-color);
+    border: 2px solid var(--main-color);
     border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
@@ -184,6 +186,7 @@ section{
 header.sticky{
     background: var(--bg-color);
     box-shadow: 0 .1rem 1rem rgba(0,0,0,.2);
+    position: fixed;
 }
 
 .about{
@@ -507,7 +510,7 @@ form .send-btn:hover{
     .navlist{
         position: absolute;
         top: 100%;
-        right: -100;
+        right: -255px;
         width: 255px;
         min-height: 100vh;
         display: flex;

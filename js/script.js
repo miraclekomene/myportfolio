@@ -15,3 +15,8 @@ window.onscroll = () => {
     navlist.classList.remove("active");
 };
 
+
+// window.addEventListener("scroll", function() {
+//     console.log("Scroll event fired!");
+//     console.log(window.scrollY);
+// });
