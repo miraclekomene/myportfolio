@@ -253,10 +253,18 @@ header.sticky{
     box-shadow: 0 0 5px var(--main-color);
     transition: all .50s ease;
     cursor: pointer;
+
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    text-align: center;  */
+    
 }
 
 .box img{
     margin-bottom: 20px;
+    height: 100px;
 }
 
 .box h3{
@@ -510,8 +518,6 @@ form .send-btn:hover{
     .navlist{
         position: fixed;
         top: 70px;
-        /* top: 100%;
-        right: -255px; */
         right: -255px;
         width: 255px;
         min-height: 100vh;
