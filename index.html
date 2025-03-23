@@ -324,12 +324,31 @@
         </div>
 
         <div class="contact-form" data-aos="zoom-in">
-            <form action="">
+            <!-- <form action="">
                 <input type="text" placeholder="Your Name" required>
                 <input type="email" name="" id="" placeholder="Email Address" required>
-                <textarea name="" id="" cols="30" rows="10" placeholder="Write Message Here" required></textarea>
+                <textarea name="" id="" cols="30" rows="10" placeholder="Write Message Here" required style="resize: none;"></textarea>
                 <input type="submit" value="Submit" class="send-btn">
-            </form>
+            </form> -->
+            <!-- Contact Form -->
+        <form id="contactForm">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <span class="error" id="nameError"></span>
+
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+            <span class="error" id="emailError"></span>
+
+            <textarea id="message" name="message" cols="30" rows="10" placeholder="Write Message Here" required style="resize: none;"></textarea>
+            <span class="error" id="messageError"></span>
+
+            <input type="submit" value="Submit" class="send-btn">
+            <p id="responseMessage"></p>
+        </form>
+
+        <style>
+            .error { color: red; font-size: 14px; margin-bottom: 10px; display: block; }
+            .success { color: green; font-size: 16px; }
+        </style>
         </div>
     </section>
 
@@ -347,11 +366,86 @@
     <script src="./js/script.js"></script>
     <!-- aos -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <!-- Include EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <script>
       AOS.init({
         offset: 300,
         duration: 1400,
       });
+    </script>
+
+    <script>
+        // Initialize EmailJS
+        emailjs.init("duoLaGenjn7suaZQI"); // Replace with your EmailJS User ID
+
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+        
+            // Clear previous errors
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("messageError").textContent = "";
+            document.getElementById("responseMessage").textContent = "";
+        
+            // Get form values
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let message = document.getElementById("message").value.trim();
+            let isValid = true;
+        
+            // Validate Name
+            if (name === "") {
+                document.getElementById("nameError").textContent = "Name is required.";
+                isValid = false;
+            }
+        
+            // Validate Email
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (email === "") {
+                document.getElementById("emailError").textContent = "Email is required.";
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Enter a valid email address.";
+                isValid = false;
+            }
+        
+            // Validate Message
+            if (message === "") {
+                document.getElementById("messageError").textContent = "Message cannot be empty.";
+                isValid = false;
+            } else if (message.length < 10) {
+                document.getElementById("messageError").textContent = "Message must be at least 10 characters.";
+                isValid = false;
+            }
+        
+            if (!isValid) return; // Stop if validation fails
+        
+            // Disable submit button to prevent spam
+            let submitButton = document.querySelector(".send-btn");
+            submitButton.disabled = true;
+            submitButton.value = "Sending...";
+        
+            // Send email via EmailJS( with serviceId and templateId)
+            emailjs.sendForm("service_grazivl", "template_kf7sytc", this)
+            .then(function(response) {
+                document.getElementById("responseMessage").textContent = "Message sent successfully!";
+                // Remove query parameters from URL
+                window.history.pushState({}, document.title, window.location.pathname);
+
+                document.getElementById("responseMessage").classList.add("success");
+                // Optional: Reset the form fields
+                document.getElementById("contactForm").reset();
+            }, function(error) {
+                document.getElementById("responseMessage").textContent = "Error sending message. Please try again.";
+                document.getElementById("responseMessage").classList.add("error");
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.value = "Submit";
+            });
+        });
     </script>
 </body>
 </html>
