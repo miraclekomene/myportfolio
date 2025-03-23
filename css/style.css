@@ -240,31 +240,32 @@ header.sticky{
 .services-content{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px,auto));
+    grid-auto-rows: 1fr; /* Makes all grid items equal height */
     align-items: center;
     gap: 2.3rem;
     margin-top: 4.2rem;
 }
 
 .box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures even spacing */
+    height: 100%; /* Forces equal height */
+    
     padding: 80px 40px 66px;
     background: #2d343f;
     border-radius: 28px;
     border: 1px solid transparent;
     box-shadow: 0 0 5px var(--main-color);
     transition: all .50s ease;
-    cursor: pointer;
-
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    text-align: center;  */
-    
+    cursor: pointer;    
 }
+ 
 
 .box img{
     margin-bottom: 20px;
     height: 100px;
+    align-self: center;
 }
 
 .box h3{
@@ -472,11 +473,13 @@ form .send-btn:hover{
 @media(max-width:1290px){
     .box{
         padding: 40px 40px 46px;
+        align-items: flex-start; /* Aligns all content to the left */
     }
     .box img{
         width: 100%;
         height: 60px;
         max-width: 60px;
+        align-self: flex-start; /* Moves image to the left */
     }
 
     .box h3{
